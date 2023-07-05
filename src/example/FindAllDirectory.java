@@ -11,7 +11,10 @@ public class FindAllDirectory {
     public FindAllDirectory(File dir) {
         this.dir = dir;
         directoryList = new ArrayList<>();
-        findAllDirectory(dir);
+        if (dir.isDirectory()) {
+            directoryList.add(dir);
+            findAllDirectory(dir);
+        }
     }
 
     public List<File> getDirectoryList() {
@@ -19,15 +22,14 @@ public class FindAllDirectory {
     }
 
     public void findAllDirectory(File dir) {
-        File[] files = dir.listFiles((file)->{
+        File[] files = dir.listFiles((file) -> {
             return file.isDirectory();
         });
-        for (File file:files) {
-            if (file.isDirectory()) {
-                directoryList.add(file);
-                findAllDirectory(file);
-            }
+        for (File file : files) {
+            directoryList.add(file);
+            findAllDirectory(file);
         }
-
     }
 }
+
+

@@ -3,12 +3,10 @@ package example;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 public class Task extends RecursiveAction {
-    private Path target = Path.of("C:\\Users\\Aleksandr\\Desktop\\temp");
     private int sizeFile;
     private List<File> allDirectory;
     private int start;
@@ -32,9 +30,8 @@ public class Task extends RecursiveAction {
                 for (File file : files) {
                     if (file.isFile() && file.length() > sizeFile) {
                         try {
-                            System.out.println(Thread.currentThread().getName() + " Перемещаем " + file);
                             informationMovedFiles.getList().add(new FileInfo(file.toPath(), file.length()));
-                            Files.move(file.toPath(), target.resolve(file.getName()));
+                            Files.move(file.toPath(), Main.targetPath.resolve(file.getName()));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
